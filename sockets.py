@@ -115,7 +115,6 @@ def subscribe_socket(ws):
     g = gevent.spawn(read_ws, ws, client)
 
     try:
-        ws.send(json.dumps(myWorld.world()))
         while True:
             message = client.get()
             ws.send(message)
