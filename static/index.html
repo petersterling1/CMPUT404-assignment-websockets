@@ -239,13 +239,17 @@ function update() {
     drawFrame();
 }
 function wsSetup() {
+
+	//console.log(host);
+
     var url = "ws://"+host+"/subscribe/";
     socket = new WebSocket(url);
     socket.onopen = function() {
         wscounter = wscounter + 1;
     };
     socket.onerror = function(msg) {
-        debug("WebSocket Error:" + msg.data);
+        debug("WebSocket Error: :( " + msg.data);
+
     };
     socket.onmessage = function(msg) {
         try {

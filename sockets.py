@@ -108,11 +108,14 @@ def subscribe_socket(ws):
     '''Fufill the websocket URL of /subscribe, every update notify the
        websocket and read updates from the websocket '''
 
+    print "subscribe viewed"
+
     client = Client()
     clients.append(client)
     g = gevent.spawn(read_ws, ws, client)
 
     try:
+        ws.send(json.dumps(myWorld.world()))
         while True:
             message = client.get()
             ws.send(message)
