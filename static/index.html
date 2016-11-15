@@ -125,6 +125,11 @@ function addEntity(entity, data) {
     world[entity] = data;
     drawNextFrame(); // (but should we?)
     //XXX: Send a XHTML Request that updates the entity you just modified!
+
+    message = {};
+    message[entity] = data;
+    socket.send(JSON.stringify(message));
+
 }
 var counter = 0;
 function addEntityWithoutName(data) {
@@ -261,7 +266,14 @@ function wsSetup() {
     socket.onmessage = function(msg) {  
         try {
             debug("WebSocket Recv:" + msg.data);
-            //XXX: TODO What are you going to do here?            
+            //XXX: TODO What are you going to do here?
+
+            message = JSON.parse(msg.data);
+            for(i in message) {
+            	world[i] = message[i];
+            }
+            drawNextFrame();
+
         } catch (e) {
             alert("socket on message: " + e);
         }
